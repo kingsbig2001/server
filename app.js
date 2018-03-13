@@ -23,7 +23,7 @@ app.get('/', (req, res) => res.status(200).send({
 }));
 
 
-// Setup a default catch-all route that sends back a welcome message in JSON format.
+// Setup a default catch-all route that sends back business by id
 app.get('/businesses/:businessid', (req, res) => {
     let businessid = parseInt(req.params.businessid, 10);
     console.log(businessid)
@@ -37,16 +37,16 @@ app.get('/businesses/:businessid', (req, res) => {
 });
 
 // Setting up API  GET routes for search by location
-app.get('/', (req, res) => res.status(200).send({
-    message: 'Welcome to the Weconnect API!',
-}));
+// app.get('/', (req, res) => res.status(200).send({
+//     message: 'Welcome to the Weconnect API!',
+// }));
 
 // Setting up API  GET routes for search by category
 // app.get('/businesses?location=<location>', (req, res) => res.status(200).send({
 //     message: 'Welcome to the Weconnect API!',
 // }));
 
-// Setup a default catch-all route that sends back a welcome message in JSON format.
+// Setup a default catch-all route that sends back reviews of a business by id.
 app.get('/businesses/:businessid/reviews', (req, res) => {
     let bizid = parseInt(req.params.businessid, 10);
     let known = reviews.filter((now) => {
@@ -58,7 +58,7 @@ app.get('/businesses/:businessid/reviews', (req, res) => {
  
 });
 
-// GET all businesses
+// GET all businesses by location ( not fully implented)
 app.get('/businesses', (req, res) => {
     if(req.query){
         res.send(req.query);
@@ -91,7 +91,7 @@ app.post('/businesses', (req, res) => {
     res.send(newBiz);
 });
 
-// Post a review
+// Post a review ( not fully implemented)
 app.post('/businesses/:businessid/reviews', (req, res) => {
     let bizid = parseInt(req.params.businessid, 10);
     const newReview = req.body;
