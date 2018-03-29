@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _http = require('http');
 
 var _http2 = _interopRequireDefault(_http);
@@ -20,3 +24,5 @@ var server = _http2.default.createServer(_app2.default);
 server.listen(port, function () {
     console.log('app started and listening to ' + port);
 });
+
+exports.default = server;

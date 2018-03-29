@@ -12,9 +12,12 @@ var _user = require('../model/user');
 
 var _user2 = _interopRequireDefault(_user);
 
+var _www = require('../bin/www');
+
+var _www2 = _interopRequireDefault(_www);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import server from'../server/app';
 var should = _chai2.default.should();
 var expect = _chai2.default.expect();
 
@@ -23,7 +26,7 @@ _chai2.default.use(_chaiHttp2.default);
 describe('Test For All HTTP GET API endpoints', function () {
   describe('GET all businesses in the model ', function () {
     it('should list ALL businesses on /businessess GET', function (done) {
-      _chai2.default.request("http://localhost:4010").get('/businesses').end(function (err, res) {
+      _chai2.default.request(_www2.default).get('/businesses').end(function (err, res) {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
@@ -43,7 +46,7 @@ describe('Test For All HTTP GET API endpoints', function () {
   describe('Test for a valid businessid', function () {
     it('Should return `200` status code ', function (done) {
       var businessid = 2;
-      _chai2.default.request("http://localhost:4010").get('/businesses/' + businessid).end(function (err, res) {
+      _chai2.default.request(_www2.default).get('/businesses/' + businessid).end(function (err, res) {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
@@ -64,7 +67,7 @@ describe('Test For All HTTP GET API endpoints', function () {
     describe('Test for invalid business', function () {
       it('Should return `404` status code', function (done) {
         var businessid = 111;
-        _chai2.default.request("http://localhost:4010").get('/businesses/' + businessid).end(function (err, res) {
+        _chai2.default.request(_www2.default).get('/businesses/' + businessid).end(function (err, res) {
           res.should.have.status(404);
           res.should.be.json;
           res.body.should.be.a('object');
@@ -81,7 +84,7 @@ describe('Test For All HTTP GET API endpoints', function () {
 describe('Test For All HTTP POST API endpoints', function () {
   describe('Test for Business Registration POST /businesses', function () {
     it('should add a new business on /businesses POST', function (done) {
-      _chai2.default.request("http://localhost:4010").post('/businesses').send({ 'name': 'Andela', 'category': 'Educational', 'businessid': '4', 'location': 'lagos',
+      _chai2.default.request(_www2.default).post('/businesses').send({ 'name': 'Andela', 'category': 'Educational', 'businessid': '4', 'location': 'lagos',
         'review': 'Unique and outstanding', 'keywords': ['andela', 'africa arise', 'tech'] }).end(function (err, res) {
         //expect(res).to.be.json;
         res.should.have.status(201);
@@ -100,7 +103,7 @@ describe('Test For All HTTP POST API endpoints', function () {
   });
   describe('Test for User Registration POST /auth/signup', function () {
     it('should add a new user on /auth/signup POST', function (done) {
-      _chai2.default.request("http://localhost:4010").post('/auth/signup').send({ 'name': 'Kelvin', 'username': 'llcoolj', 'userid': 4, 'email': 'kellcoolj@yahoo.com',
+      _chai2.default.request(_www2.default).post('/auth/signup').send({ 'name': 'Kelvin', 'username': 'llcoolj', 'userid': 4, 'email': 'kellcoolj@yahoo.com',
         'password': 'mustach2109' }).end(function (err, res) {
         res.should.have.status(201);
         res.should.be.json;
@@ -121,7 +124,7 @@ describe('Test For All HTTP POST API endpoints', function () {
   });
   describe('USER SignUp with email field blank POST /auth/signup', function () {
     it('should FAIL due to missing/empty email /auth/signup POST', function (done) {
-      _chai2.default.request("http://localhost:4010").post('/auth/signup').send({ 'name': 'Denzel Electronics', 'username': 'denzel_electronics', 'userid': 5, 'email': '',
+      _chai2.default.request(_www2.default).post('/auth/signup').send({ 'name': 'Denzel Electronics', 'username': 'denzel_electronics', 'userid': 5, 'email': '',
         'password': 'mustach2109' }).end(function (err, res) {
         res.should.have.status(400);
         res.should.be.json;
@@ -134,7 +137,7 @@ describe('Test For All HTTP POST API endpoints', function () {
   });
   describe('USER SignUp with username field Blank POST /auth/signup', function () {
     it('should FAIL due to missing/empty username /auth/signup POST', function (done) {
-      _chai2.default.request("http://localhost:4010").post('/auth/signup').send({ 'name': 'GodBless Wears', 'username': '', 'userid': 6, 'email': 'GodBless@yahoo.com',
+      _chai2.default.request(_www2.default).post('/auth/signup').send({ 'name': 'GodBless Wears', 'username': '', 'userid': 6, 'email': 'GodBless@yahoo.com',
         'password': 'mustach2109' }).end(function (err, res) {
         res.should.have.status(400);
         res.should.be.json;
@@ -147,7 +150,7 @@ describe('Test For All HTTP POST API endpoints', function () {
   });
   describe('USER SignUp with password field Blank POST /auth/signup', function () {
     it('should FAIL due to missing/empty password /auth/signup POST', function (done) {
-      _chai2.default.request("http://localhost:4010").post('/auth/signup').send({ 'name': 'Budget Trading Co', 'username': 'alymoor_brothers', 'userid': 7, 'email': 'trade_budget@btrade.biz',
+      _chai2.default.request(_www2.default).post('/auth/signup').send({ 'name': 'Budget Trading Co', 'username': 'alymoor_brothers', 'userid': 7, 'email': 'trade_budget@btrade.biz',
         'password': '' }).end(function (err, res) {
         res.should.have.status(400);
         res.should.be.json;
@@ -162,7 +165,7 @@ describe('Test For All HTTP POST API endpoints', function () {
     it('should FAIL due to user already exist /auth/signup POST', function (done) {
       var newUser = { 'name': 'chuks log', 'username': 'chuks_nlog', 'userid': 7, 'email': 'amaechichuks2000@yahoo.com',
         'password': 'mustard_seed' };
-      _chai2.default.request("http://localhost:4010").post('/auth/signup').send(newUser).end(function (err, res) {
+      _chai2.default.request(_www2.default).post('/auth/signup').send(newUser).end(function (err, res) {
         res.should.have.status(400);
         res.should.be.json;
         res.body.should.be.a('object');
