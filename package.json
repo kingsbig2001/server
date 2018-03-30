@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec npm run test ./dist/bin/www.js",
     "build": "babel ./server  -d ./dist",
-    "test": "mocha --reporter spec ./dist/test/app_test.js"
+    "test": "mocha --reporter spec ./dist/test/app_test.js --exit"
   },
   "author": "",
   "license": "ISC",
